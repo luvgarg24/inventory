@@ -89,9 +89,11 @@ const Shipping: React.FC = () => {
     setTrackingNumber(null);
     try {
       const response = await fetch(`${API_BASE}/api/shipping/label`, {
-        headers: { 'Authorization': sessionStorage.getItem('session_token') || '' },
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Authorization': sessionStorage.getItem('session_token') || '',
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
           order_number: order.order_number,
           shipping_address: order.shipping_address,
