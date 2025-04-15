@@ -123,9 +123,9 @@ const Orders: React.FC = () => {
     setError(null);
     try {
       const response = await fetch(`${API_BASE}/api/orders/${selectedOrder.id}/fulfill`, {
-        headers: { 'Authorization': sessionStorage.getItem('session_token') || '' },
         method: 'POST',
         headers: {
+          'Authorization': sessionStorage.getItem('session_token') || '',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
