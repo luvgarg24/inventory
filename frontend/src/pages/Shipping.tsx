@@ -51,11 +51,13 @@ const Shipping: React.FC = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
   const fetchOrders = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:4000/api/orders');
+      const response = await fetch(`${API_BASE}/api/orders`);
       const data = await response.json();
       if (!data.success) throw new Error(data.error);
       setOrders(data.orders.filter((o: ShopifyOrder) => o.fulfillment_status !== 'fulfilled'));
@@ -84,7 +86,7 @@ const Shipping: React.FC = () => {
     setSuccess(null);
     setTrackingNumber(null);
     try {
-      const response = await fetch('http://localhost:4000/api/shipping/label', {
+      const response = await fetch(`${API_BASE}/api/shipping/label`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

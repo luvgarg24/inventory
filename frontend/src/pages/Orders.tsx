@@ -83,12 +83,14 @@ const Orders: React.FC = () => {
     'Other'
   ];
 
+  const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
   const fetchOrders = async () => {
     setIsLoading(true);
     setError(null);
     try {
       console.log('Fetching orders...');
-      const response = await fetch('http://localhost:4000/api/orders');
+      const response = await fetch(`${API_BASE}/api/orders`);
       if (!response.ok) throw new Error('Failed to fetch orders');
       
       const data = await response.json();
@@ -118,7 +120,7 @@ const Orders: React.FC = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:3001/api/orders/${selectedOrder.id}/fulfill`, {
+      const response = await fetch(`${API_BASE}/api/orders/${selectedOrder.id}/fulfill`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

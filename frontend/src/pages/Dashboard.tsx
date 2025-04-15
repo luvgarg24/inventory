@@ -50,11 +50,12 @@ const Dashboard: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchStats = async () => {
+    const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+const fetchStats = async () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch('http://localhost:4000/api/dashboard/stats');
+        const response = await fetch(`${API_BASE}/api/dashboard/stats`);
         const data = await response.json();
         if (!data.success) throw new Error(data.error);
         setStats(data.stats);
