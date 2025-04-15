@@ -1,0 +1,12 @@
+# Node
+node_modules/
+.env
+!.env.example
+# Build
+build/
+dist/
+# Logs
+*.log
+# OS
+.DS_Store
+
