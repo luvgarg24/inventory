@@ -167,6 +167,17 @@ const Shipping: React.FC = () => {
                   <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Customer</TableCell>
                   <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Shipping Address</TableCell>
                   <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {orders.map(order => (
+                  <TableRow key={order.id}>
+                    <TableCell>{order.order_number}</TableCell>
+                    <TableCell>{order.customer.first_name} {order.customer.last_name}</TableCell>
+                    <TableCell>
+                      {order.shipping_address.address1}, {order.shipping_address.city}, {order.shipping_address.province}, {order.shipping_address.country}, {order.shipping_address.zip}
+                    </TableCell>
+                    <TableCell>
                       <Box display="flex" gap={1} alignItems="center">
                         <input
                           type="number"
@@ -259,8 +270,13 @@ const Shipping: React.FC = () => {
                           </Link>
                         </Box>
                       )}
-                    </Box>
-                  </TableCell>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </TableContainer>
       </Box>
     </Box>
   );
