@@ -55,7 +55,9 @@ const fetchStats = async () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`${API_BASE}/api/dashboard/stats`);
+        const response = await fetch(`${API_BASE}/api/dashboard/stats`, {
+          headers: { 'Authorization': sessionStorage.getItem('session_token') || '' }
+        });
         const data = await response.json();
         if (!data.success) throw new Error(data.error);
         setStats(data.stats);

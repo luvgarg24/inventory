@@ -90,7 +90,9 @@ const Orders: React.FC = () => {
     setError(null);
     try {
       console.log('Fetching orders...');
-      const response = await fetch(`${API_BASE}/api/orders`);
+      const response = await fetch(`${API_BASE}/api/orders`, {
+        headers: { 'Authorization': sessionStorage.getItem('session_token') || '' }
+      });
       if (!response.ok) throw new Error('Failed to fetch orders');
       
       const data = await response.json();
@@ -121,6 +123,7 @@ const Orders: React.FC = () => {
     setError(null);
     try {
       const response = await fetch(`${API_BASE}/api/orders/${selectedOrder.id}/fulfill`, {
+        headers: { 'Authorization': sessionStorage.getItem('session_token') || '' },
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

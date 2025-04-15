@@ -57,7 +57,9 @@ const Shipping: React.FC = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${API_BASE}/api/orders`);
+      const response = await fetch(`${API_BASE}/api/orders`, {
+        headers: { 'Authorization': sessionStorage.getItem('session_token') || '' }
+      });
       const data = await response.json();
       if (!data.success) throw new Error(data.error);
       setOrders(data.orders.filter((o: ShopifyOrder) => o.fulfillment_status !== 'fulfilled'));
@@ -87,6 +89,7 @@ const Shipping: React.FC = () => {
     setTrackingNumber(null);
     try {
       const response = await fetch(`${API_BASE}/api/shipping/label`, {
+        headers: { 'Authorization': sessionStorage.getItem('session_token') || '' },
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, CssBaseline, ThemeProvider, createTheme, Typography } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
+import Login from './Login';
 import DashboardNav from './DashboardNav';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
@@ -17,7 +18,13 @@ import PaymentsMade from './pages/purchase/PaymentsMade';
 const theme = createTheme();
 
 function App() {
-  console.log('App component rendering');
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    if (sessionStorage.getItem('session_token') === 'valid-session') {
+      setLoggedIn(true);
+    }
+  }, []);
+  if (!loggedIn) return <Login onLogin={() => setLoggedIn(true)} />;
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

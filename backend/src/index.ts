@@ -6,6 +6,7 @@ import productsRoutes from './routes/products';
 import ordersRoutes from './routes/orders';
 import shippingRoutes from './routes/shipping';
 import dashboardRoutes from './routes/dashboard';
+import authRoutes from './routes/auth';
 import path from 'path';
 
 dotenv.config();
@@ -23,15 +24,26 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Auth middleware
+app.use((req, res, next) => {
+  if (req.path === '/api/login') return next();
+  const token = req.headers['authorization'];
+  if (token === 'valid-session') {
+    return next();
+  }
+  res.status(401).json({ success: false, error: 'Unauthorized' });
+});
+
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'running' });
 });
 
 app.use('/shopify', shopifyRoutes);
-app.use('/api/products', productsRoutes);
-app.use('/api/orders', ordersRoutes);
-app.use('/api/shipping', shippingRoutes);
+app.use('/api', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/orders', ordersRoutes);
+app.use('/api/products', productsRoutes);
+app.use('/api/shipping', shippingRoutes);
 
 // Serve generated labels statically
 app.use('/labels', express.static(path.join(__dirname, '../public/labels')));
