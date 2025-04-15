@@ -31,6 +31,9 @@ const Purchase: React.FC = () => {
         <Tabs
           value={currentTab === -1 ? 0 : currentTab}
           onChange={(_, idx) => navigate(purchaseTabs[idx].path)}
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
           sx={{
             borderBottom: 1,
             borderColor: 'divider',
@@ -41,7 +44,10 @@ const Purchase: React.FC = () => {
               borderRadius: 2,
             },
             '.Mui-selected': { color: '#582000 !important', fontWeight: 700 },
-            minHeight: 48
+            minHeight: 48,
+            overflowX: 'auto',
+            width: '100%',
+            maxWidth: '100vw',
           }}
           TabIndicatorProps={{ style: { background: '#582000', height: 4, borderRadius: 2 } }}
         >

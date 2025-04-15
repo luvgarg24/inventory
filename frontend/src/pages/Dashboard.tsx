@@ -97,9 +97,9 @@ const fetchStats = async () => {
     <Box p={{ xs: 1, md: 4 }}>
       <Box mb={4} display="flex" flexDirection={{ xs: 'column', md: 'row' }} alignItems={{ md: 'center' }} justifyContent="space-between" gap={2}>
         <Typography variant="h4" fontWeight={700} color="primary.main">Dashboard</Typography>
-        <Box display="flex" gap={2}>
-          <Button variant="contained" color="primary">+ Add Product</Button>
-          <Button variant="outlined" color="secondary">Sync Shopify</Button>
+        <Box display="flex" gap={2} flexDirection={{ xs: 'column', sm: 'row' }}>
+          <Button variant="contained" color="primary" sx={{ width: { xs: '100%', sm: 'auto' } }}>+ Add Product</Button>
+          <Button variant="outlined" color="secondary" sx={{ width: { xs: '100%', sm: 'auto' } }}>Sync Shopify</Button>
         </Box>
       </Box>
       <Grid container spacing={3}>
@@ -236,7 +236,6 @@ const fetchStats = async () => {
                       <TableCell>Order ID</TableCell>
                       <TableCell>Date</TableCell>
                       <TableCell>Total</TableCell>
-                      <TableCell>Status</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -253,9 +252,6 @@ const fetchStats = async () => {
                         <TableCell>{new Date(order.created_at).toLocaleString()}</TableCell>
                         <TableCell>
                           <Chip label={`$${Number(order.total_price).toFixed(2)}`} color="info" size="small" />
-                        </TableCell>
-                        <TableCell>
-                          <Chip label={order.fulfillment_status || 'Unfulfilled'} color={order.fulfillment_status === 'fulfilled' ? 'success' : 'warning'} size="small" />
                         </TableCell>
                       </TableRow>
                     ))}

@@ -28,9 +28,20 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, minHeight: '100vh' }}>
         <DashboardNav />
-        <Box component="main" sx={{ flexGrow: 1, width: '100%', maxWidth: 'none', minHeight: '100vh', p: 0, m: 0 }}>
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            width: { xs: '100vw', sm: '100%' },
+            maxWidth: 'none',
+            minHeight: '100vh',
+            p: { xs: 1, sm: 2 },
+            mt: { xs: 7, sm: 0 }, // space for AppBar on mobile
+            overflowX: 'auto'
+          }}
+        >
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />

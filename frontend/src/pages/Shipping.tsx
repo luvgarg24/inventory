@@ -144,24 +144,29 @@ const Shipping: React.FC = () => {
         <Alert onClose={() => setError(null)} severity="error">{error}</Alert>
       </Snackbar>
 
-      <TableContainer component={Paper} sx={{ mx: 'auto', maxWidth: 1400, width: '100%', boxShadow: 3, borderRadius: 3, p: 0, mb: 4 }}>
-        {isLoading ? (
-          <Box display="flex" justifyContent="center" p={6}>
-            <CircularProgress />
-          </Box>
-        ) : orders.length === 0 ? (
-          <Box py={6} textAlign="center">
-            <Typography variant="h6" color="text.secondary" mb={2}>
-              {/* Optionally add an icon here for friendliness */}
-              No unfulfilled orders found. Click Refresh to try again!
-            </Typography>
-            <Button variant="contained" sx={{ bgcolor: '#582000', color: '#fff', fontWeight: 700, borderRadius: 3, boxShadow: 1, textTransform: 'none', '&:hover': { bgcolor: '#3d1400' } }} onClick={fetchOrders}>
-              Refresh Orders
-            </Button>
-          </Box>
-        ) : (
-          <Table sx={{ width: '100%', minWidth: 700, maxWidth: 'none' }} size="medium">
-            <TableHead>
+      <Box sx={{ width: '100%', overflowX: 'auto' }}>
+        <TableContainer component={Paper} sx={{ mt: 3, boxShadow: 1, borderRadius: 3, minWidth: 360 }}>
+          {isLoading ? (
+            <Box display="flex" justifyContent="center" p={6}>
+              <CircularProgress />
+            </Box>
+          ) : orders.length === 0 ? (
+            <Box textAlign="center" p={6}>
+              <Typography variant="h6" color="#6b7280" mb={2}>
+                No orders found
+              </Typography>
+              <Button variant="outlined" onClick={fetchOrders} sx={{ borderColor: '#582000', color: '#582000', fontWeight: 700 }}>
+                Refresh
+              </Button>
+            </Box>
+          ) : (
+            <Table stickyHeader sx={{ minWidth: 900, bgcolor: '#fff' }}>
+              <TableHead>
+                <TableRow sx={{ background: '#f5f7fa', borderBottom: '2px solid #e0e7ef' }}>
+                  <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Order #</TableCell>
+                  <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Customer</TableCell>
+                  <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Shipping Address</TableCell>
+                  <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Action</TableCell>
               <TableRow sx={{ background: '#f5f7fa', borderBottom: '2px solid #e0e7ef' }}>
                 <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Order #</TableCell>
                 <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Customer</TableCell>
@@ -282,7 +287,7 @@ const Shipping: React.FC = () => {
           </Table>
         )}
       </TableContainer>
-    </Box>
+      </Box>
   );
 };
 

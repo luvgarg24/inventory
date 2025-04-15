@@ -109,12 +109,12 @@ export default function Products() {
 
   return (
     <Box sx={{ width: '100%', minHeight: 'calc(100vh - 80px)', py: 2, px: { xs: 0.5, sm: 2, md: 4 }, bgcolor: '#f8fafb' }}>
-      <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
+      <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'flex-start', sm: 'center' }} justifyContent="space-between" mb={2} gap={2}>
         <Box>
           <Typography variant="h4" fontWeight={800} color="#222">Products</Typography>
           <Typography variant="subtitle1" color="#6b7280">Track and update your Shopify inventory</Typography>
         </Box>
-        <Box display="flex" gap={2}>
+        <Box sx={{ display: 'flex', justifyContent: { xs: 'center', sm: 'flex-end' }, alignItems: 'center', width: { xs: '100%', sm: 'auto' }, mt: { xs: 2, sm: 0 } }}>
           <TextField
             placeholder="Search products..."
             size="small"
@@ -131,7 +131,8 @@ export default function Products() {
               boxShadow: 1,
               textTransform: 'none',
               '&:hover': { bgcolor: '#3d1400' },
-              minWidth: 140
+              minWidth: 140,
+              ml: 2
             }}
             startIcon={<CircularProgress size={20} color="inherit" sx={{ display: isLoading ? 'inline-flex' : 'none' }} />} 
             onClick={fetchProducts}
@@ -148,13 +149,7 @@ export default function Products() {
               borderRadius: 3,
               minWidth: 140,
               textTransform: 'none',
-              '&:hover': { borderColor: '#3d1400', color: '#3d1400', bgcolor: '#f5ede7' }
-            }}
-            disabled
-          >
-            Add Product
-          </Button>
-        </Box>
+              '&:hover': { borderColor: '#3d1400', color: '#3d1400', bgcolor: '#f5ede7' },
       </Box>
 
       {/* Error Snackbar */}
@@ -181,68 +176,61 @@ export default function Products() {
         </Alert>
       </Snackbar>
 
-      <TableContainer component={Paper} sx={{ mt: 2, mb: 4, boxShadow: 1, borderRadius: 3, width: '100%', px: 0 }}>
-        {isLoading ? (
-          <Box display="flex" justifyContent="center" p={6}>
-            <Box textAlign="center">
-              <CircularProgress sx={{ mb: 2, color: '#582000' }} />
-              <Typography color="#6b7280">
-                Loading products...
-              </Typography>
+      <Box sx={{ width: '100%', overflowX: 'auto' }}>
+        <TableContainer component={Paper} sx={{ mt: 3, boxShadow: 1, borderRadius: 3, minWidth: 360 }}>
+          {isLoading ? (
+            <Box display="flex" justifyContent="center" p={6}>
+              <CircularProgress />
             </Box>
-          </Box>
-        ) : products.length === 0 ? (
-          <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" py={8}>
-            {/* You can replace below with an SVG/illustration for more polish */}
-            <Typography variant="h6" color="#6b7280" mb={2}>
-              No products found
-            </Typography>
-            <Typography color="#6b7280" mb={2}>
-              Add some products to your Shopify store to see them here.
-            </Typography>
-            <Button variant="outlined" sx={{ borderColor: '#582000', color: '#582000', fontWeight: 700 }} onClick={fetchProducts}>
-              Refresh
-            </Button>
-          </Box>
-        ) : (
-          <Table stickyHeader sx={{ minWidth: 900, bgcolor: '#fff' }}>
-            <TableHead>
-              <TableRow sx={{ background: '#f5f7fa', borderBottom: '2px solid #e0e7ef' }}>
-                <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Product</TableCell>
-                <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Variant</TableCell>
-                <TableCell align="right" sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Inventory</TableCell>
-                <TableCell align="center" sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {products.map((product) =>
-                product.variants.map((variant) => (
-                  <TableRow key={variant.id} hover sx={{ transition: 'background 0.2s', '&:hover': { background: '#f5ede7' } }}>
-                    <TableCell>{product.title}</TableCell>
-                    <TableCell>{variant.title}</TableCell>
-                    <TableCell align="right">{variant.inventory_quantity}</TableCell>
-                    <TableCell align="center">
-                      <IconButton
-                        sx={{ borderRadius: 2, color: '#582000', '&:hover': { bgcolor: '#f5ede7' } }}
-                        onClick={() => handleEditInventory(variant)}
-                        title="Edit Inventory"
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        )}
-      </TableContainer>
-      {/* Modern Dialog for Inventory Update */}
-      <Dialog 
+          ) : products.length === 0 ? (
+            <Box textAlign="center" p={6}>
+              <Typography variant="h6" color="#6b7280" mb={2}>
+                No products found
+              </Typography>
+              <Button variant="outlined" onClick={fetchProducts} sx={{ borderColor: '#582000', color: '#582000', fontWeight: 700 }}>
+                Refresh
+              </Button>
+            </Box>
+          ) : (
+            <Table stickyHeader sx={{ minWidth: 900, bgcolor: '#fff' }}>
+              <TableHead>
+                <TableRow sx={{ background: '#f5f7fa', borderBottom: '2px solid #e0e7ef' }}>
+                  <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Product</TableCell>
+                  <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Variant</TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Inventory</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {products.map((product) =>
+                  product.variants.map((variant) => (
+                    <TableRow key={variant.id} hover sx={{ transition: 'background 0.2s', '&:hover': { background: '#f5ede7' } }}>
+                      <TableCell>{product.title}</TableCell>
+                      <TableCell>{variant.title}</TableCell>
+                      <TableCell align="right">{variant.inventory_quantity}</TableCell>
+                      <TableCell align="center">
+                        <IconButton
+                          sx={{ borderRadius: 2, color: '#582000', '&:hover': { bgcolor: '#f5ede7' } }}
+                          onClick={() => handleEditInventory(variant)}
+                          title="Edit Inventory"
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          )}
+        </TableContainer>
+      </Box>
+    {/* Modern Dialog for Inventory Update */}
+    <Dialog 
         open={isDialogOpen} 
         onClose={() => setIsDialogOpen(false)}
         maxWidth="xs"
-        fullWidth
+        fullWidth={true}
         PaperProps={{ sx: { borderRadius: 3, p: 2 } }}
       >
         <DialogTitle sx={{ fontWeight: 700, pb: 0 }}>
