@@ -150,6 +150,12 @@ export default function Products() {
               minWidth: 140,
               textTransform: 'none',
               '&:hover': { borderColor: '#3d1400', color: '#3d1400', bgcolor: '#f5ede7' },
+            }}
+            disabled={isLoading}
+          >
+            Add Product
+          </Button>
+        </Box>
       </Box>
 
       {/* Error Snackbar */}

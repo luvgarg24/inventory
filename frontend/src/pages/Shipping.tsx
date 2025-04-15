@@ -167,26 +167,6 @@ const Shipping: React.FC = () => {
                   <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Customer</TableCell>
                   <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Shipping Address</TableCell>
                   <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Action</TableCell>
-              <TableRow sx={{ background: '#f5f7fa', borderBottom: '2px solid #e0e7ef' }}>
-                <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Order #</TableCell>
-                <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Customer</TableCell>
-                <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Shipping Address</TableCell>
-                <TableCell sx={{ fontWeight: 800, color: '#222', py: 1.5 }}>Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {orders.map((order) => (
-                <TableRow key={order.id} hover sx={{ cursor: 'pointer', transition: 'background 0.2s', '&:hover': { background: '#f0f4fc' } }}>
-                  <TableCell>#{order.order_number}</TableCell>
-                  <TableCell>{order.customer.first_name} {order.customer.last_name}</TableCell>
-                  <TableCell>
-                    {order.shipping_address.address1}<br/>
-                    {order.shipping_address.address2 && (<>{order.shipping_address.address2}<br/></>)}
-                    {order.shipping_address.city}, {order.shipping_address.province} {order.shipping_address.zip}<br/>
-                    {order.shipping_address.country}
-                  </TableCell>
-                  <TableCell>
-                    <Box display="flex" flexDirection="column" gap={1}>
                       <Box display="flex" gap={1} alignItems="center">
                         <input
                           type="number"
@@ -281,13 +261,8 @@ const Shipping: React.FC = () => {
                       )}
                     </Box>
                   </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
-      </TableContainer>
       </Box>
+    </Box>
   );
 };
 
