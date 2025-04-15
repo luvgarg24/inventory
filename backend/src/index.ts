@@ -14,10 +14,12 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 app.use(cors({
-  origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  preflightContinue: false,
-  optionsSuccessStatus: 204
+  origin: [
+    'https://inventory.thegrainghar.in',
+    'https://inventory-front-c1we.onrender.com',
+    'http://localhost:3000'
+  ],
+  credentials: true
 }));
 app.use(express.json());
 

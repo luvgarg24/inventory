@@ -53,7 +53,7 @@ export default function Products() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:4000/api/products');
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/api/products`);
       const data = await response.json();
       if (data.success) {
         setProducts(data.products);
